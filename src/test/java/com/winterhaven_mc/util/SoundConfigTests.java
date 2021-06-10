@@ -82,7 +82,8 @@ class SoundConfigTests {
             }
 
             for (String soundName : plugin.soundConfig.getConfigSounds()) {
-                Assertions.assertTrue(soundsPlayed.containsKey(SoundId.valueOf(soundName)));
+                Assertions.assertTrue(soundsPlayed.containsKey(SoundId.valueOf(soundName)),
+                        "sounds played contains valid soundId value.");
             }
         }
 
@@ -100,7 +101,7 @@ class SoundConfigTests {
 
             for (String soundName : plugin.soundConfig.getConfigSounds()) {
                 Assertions.assertTrue(soundsPlayed.containsKey(SoundId.valueOf(soundName)),
-                        "soundId is in sounds played");
+                        "sounds played contains valid soundId value.");
             }
         }
     }
@@ -117,7 +118,7 @@ class SoundConfigTests {
 
             for (SoundId soundId : SoundId.values()) {
                 Assertions.assertTrue(configSounds.contains(soundId.toString()),
-                        soundId + " is in sounds played");
+                        soundId + " is contained in config sounds");
             }
         }
 
@@ -139,7 +140,8 @@ class SoundConfigTests {
 
             // check each config sound name is contained in enum sound names collection
             for (String configSoundName : configSoundNames) {
-                Assertions.assertTrue(enumSoundNames.contains(configSoundName));
+                Assertions.assertTrue(enumSoundNames.contains(configSoundName),
+                        configSoundName + " is contained in SoundId");
             }
         }
     }
@@ -148,7 +150,7 @@ class SoundConfigTests {
     @DisplayName("Test SoundConfig reload method.")
     void reload() {
         plugin.soundConfig.reload();
-        Assertions.assertNotNull(plugin.soundConfig);
+        Assertions.assertNotNull(plugin.soundConfig, "soundConfig not null after reload.");
     }
 
 }
