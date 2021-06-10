@@ -12,7 +12,7 @@ import java.io.File;
 @SuppressWarnings("unused")
 public final class PluginMain extends JavaPlugin {
 
-    public SoundConfiguration soundConfig;
+    public YamlSoundConfiguration soundConfig;
 
 
     public PluginMain() {
@@ -29,8 +29,6 @@ public final class PluginMain extends JavaPlugin {
     public void onEnable() {
         // instantiate sound config
         soundConfig = new YamlSoundConfiguration(this);
-
-
     }
 
 }
