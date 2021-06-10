@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -54,6 +55,15 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		this.reload();
 	}
 
+	@Override
+	public String getSoundFileName() {
+		return soundFileName;
+	}
+
+	@Override
+	public Collection<String> getConfigSounds() {
+		return sounds.getKeys(false);
+	}
 
 	/**
 	 * Load sound configuration from yaml file
@@ -128,19 +138,19 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		Player player = (Player) sender;
 
 		// if sound is set to enabled in sounds file
-		if (sounds.getBoolean(soundId.toString() + ".enabled")) {
+		if (sounds.getBoolean(soundId + ".enabled")) {
 
 			// get player only setting from config file
-			boolean playerOnly = sounds.getBoolean(soundId.toString() + ".player-only");
+			boolean playerOnly = sounds.getBoolean(soundId + ".player-only");
 
 			// get sound name from config file
-			String soundName = sounds.getString(soundId.toString() + ".sound");
+			String soundName = sounds.getString(soundId + ".sound");
 
 			// get sound volume from config file
-			float volume = (float) sounds.getDouble(soundId.toString() + ".volume");
+			float volume = (float) sounds.getDouble(soundId + ".volume");
 
 			// get sound pitch from config file
-			float pitch = (float) sounds.getDouble(soundId.toString() + ".pitch");
+			float pitch = (float) sounds.getDouble(soundId + ".pitch");
 
 			// check that sound name is valid
 			if (validSoundNames.contains(soundName)) {
@@ -186,13 +196,13 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		if (sounds.getBoolean(soundId.toString() + ".enabled")) {
 
 			// get sound name from config file
-			String soundName = sounds.getString(soundId.toString() + ".sound");
+			String soundName = sounds.getString(soundId + ".sound");
 
 			// get sound volume from config file
-			float volume = (float) sounds.getDouble(soundId.toString() + ".volume");
+			float volume = (float) sounds.getDouble(soundId + ".volume");
 
 			// get sound pitch from config file
-			float pitch = (float) sounds.getDouble(soundId.toString() + ".pitch");
+			float pitch = (float) sounds.getDouble(soundId + ".pitch");
 
 			// check that sound name is valid
 			if (validSoundNames.contains(soundName)) {

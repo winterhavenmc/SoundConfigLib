@@ -3,6 +3,8 @@ package com.winterhaven_mc.util;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
+import java.util.Collection;
+
 
 @SuppressWarnings("unused")
 public interface SoundConfiguration {
@@ -31,4 +33,7 @@ public interface SoundConfiguration {
 	 */
 	void playSound(final Location location, final Enum<?> soundId);
 
+	String getSoundFileName();
+
+	Collection<String> getConfigSounds();
 }
