@@ -7,7 +7,10 @@ import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.bukkit.Location;
 import org.junit.jupiter.api.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumMap;
+import java.util.HashSet;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SoundConfigTests {
@@ -35,65 +38,109 @@ class SoundConfigTests {
         MockBukkit.unmock();
     }
 
+    @Nested
+    class Mocking {
+        @Test
+        @DisplayName("Mock server is not null.")
+        void MockServerNotNull() {
+            Assertions.assertNotNull(server);
+        }
 
-    @Test
-    @DisplayName("Test mock server is not null.")
-    void MockServerNotNull() {
-        Assertions.assertNotNull(server);
+        @Test
+        @DisplayName("Mock plugin is not null.")
+        void MockPluginNotNull() {
+            Assertions.assertNotNull(plugin);
+        }
+
+        @Test
+        @DisplayName("SoundConfig is not null.")
+        void soundConfigNotNull() {
+            Assertions.assertNotNull(plugin.soundConfig);
+        }
     }
 
     @Test
-    @DisplayName("Test mock plugin is not null.")
-    void MockPluginNotNull() {
-        Assertions.assertNotNull(plugin);
-    }
-
-    @Test
-    @DisplayName("Test soundConfig is not null.")
-    void soundConfigNotNull() {
-        Assertions.assertNotNull(plugin.soundConfig);
-    }
-
-    @Test
-    @DisplayName("Play sounds. Assert more than one sound played from SoundId enum.")
+    @DisplayName("Play sounds for player. Assert sounds played matches sound.yml config sounds.")
     void playSoundsForPlayer() {
-        int count = 0;
+
+        EnumMap<SoundId, Boolean> soundsPlayed = new EnumMap<>(SoundId.class);
+
         for (SoundId soundId : SoundId.values()) {
             plugin.soundConfig.playSound(player, soundId);
-            count += 1;
+            soundsPlayed.put(soundId, true);
         }
-        Assertions.assertTrue(count > 1);
+
+        for (String soundName : plugin.soundConfig.getConfigSounds()) {
+            Assertions.assertTrue(soundsPlayed.containsKey(SoundId.valueOf(soundName)));
+        }
     }
 
     @Test
-    @DisplayName("Play sounds. Assert more than one sound played from SoundId enum.")
+    @DisplayName("Play sounds for location. Assert sounds played matches sound.yml config sounds.")
     void playSoundsForLocation() {
-        int count = 0;
+
+        EnumMap<SoundId, Boolean> soundsPlayed = new EnumMap<>(SoundId.class);
+
         WorldMock world = server.addSimpleWorld("world");
         for (SoundId soundId : SoundId.values()) {
             plugin.soundConfig.playSound(new Location(world, 0, 0, 0), soundId);
-            count += 1;
+            soundsPlayed.put(soundId, true);
         }
-        Assertions.assertTrue(count > 1);
+
+        for (String soundName : plugin.soundConfig.getConfigSounds()) {
+            Assertions.assertTrue(soundsPlayed.containsKey(SoundId.valueOf(soundName)),
+                    "soundId is in sounds played");
+        }
     }
 
     @Test
     @DisplayName("Test for valid sound file name.")
     void ValidSoundFileName() {
-        Assertions.assertEquals("sounds.yml", plugin.soundConfig.getSoundFileName());
+        String soundFileName = "sounds.yml";
+        Assertions.assertEquals(soundFileName, plugin.soundConfig.getSoundFileName(),
+                "soundFileName equals '" + soundFileName + "'");
     }
 
+
     @Test
-    @DisplayName("Count configured sounds.")
-    void MatchSounds() {
+    @DisplayName("Match all enum sounds against config sounds.")
+    void MatchAllEnumSounds() {
+
+        // collection of enum sound names
         Collection<String> configSounds = plugin.soundConfig.getConfigSounds();
+
         for (SoundId soundId : SoundId.values()) {
-            Assertions.assertTrue(configSounds.contains(soundId.toString()));
+            Assertions.assertTrue(configSounds.contains(soundId.toString()),
+                    soundId + " is in sounds played");
         }
     }
 
+
     @Test
-    @DisplayName("Test reload method.")
+    @DisplayName("Match all config sounds against enum sounds.")
+    void MatchAllConfigSounds() {
+
+        // collection of sound config keys
+        Collection<String> configSoundNames = plugin.soundConfig.getConfigSounds();
+
+        // collection of enum sound names
+        Collection<String> enumSoundNames = new HashSet<>();
+
+        // create list of enum sound name strings
+        for (SoundId soundId : SoundId.values()) {
+            enumSoundNames.add(soundId.toString());
+        }
+
+        // check each config sound name is contained in enum sound names collection
+        for (String configSoundName : configSoundNames) {
+            Assertions.assertTrue(enumSoundNames.contains(configSoundName));
+        }
+
+    }
+
+
+    @Test
+    @DisplayName("Test SoundConfig reload method.")
     void reload() {
         plugin.soundConfig.reload();
         Assertions.assertNotNull(plugin.soundConfig);
