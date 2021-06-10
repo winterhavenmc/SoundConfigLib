@@ -57,14 +57,27 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 
 
 	// some protected classes used for testing
+
+	/**
+	 * Get sound file name
+	 * @return String - sound file name
+	 */
 	protected String getSoundFileName() {
 		return soundFileName;
 	}
 
+	/**
+	 * get yaml sound configuration object
+	 * @return YamlConfiguration - sound configuration object
+	 */
 	protected YamlConfiguration getYamlSounds() {
 		return this.sounds;
 	}
 
+	/**
+	 * get configuration keys as collection of String
+	 * @return Collection of String - configuration keys
+	 */
 	protected Collection<String> getConfigSounds() {
 		return sounds.getKeys(false);
 	}
