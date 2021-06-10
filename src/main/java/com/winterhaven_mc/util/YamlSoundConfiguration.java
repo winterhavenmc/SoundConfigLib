@@ -55,15 +55,20 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		this.reload();
 	}
 
-	@Override
-	public String getSoundFileName() {
+
+	// some protected classes used for testing
+	protected String getSoundFileName() {
 		return soundFileName;
 	}
 
-	@Override
-	public Collection<String> getConfigSounds() {
+	protected YamlConfiguration getYamlSounds() {
+		return this.sounds;
+	}
+
+	protected Collection<String> getConfigSounds() {
 		return sounds.getKeys(false);
 	}
+
 
 	/**
 	 * Load sound configuration from yaml file
