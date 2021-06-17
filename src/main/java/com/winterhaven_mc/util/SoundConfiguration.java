@@ -3,6 +3,8 @@ package com.winterhaven_mc.util;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
+import java.util.Collection;
+
 
 public interface SoundConfiguration {
 
@@ -29,5 +31,7 @@ public interface SoundConfiguration {
 	 * @param soundId  the sound identifier enum member
 	 */
 	void playSound(final Location location, final Enum<?> soundId);
+
+	Collection<String> getSoundNames();
 
 }
