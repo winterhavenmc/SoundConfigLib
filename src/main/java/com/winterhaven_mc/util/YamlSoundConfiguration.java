@@ -30,7 +30,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	private final String soundFileName = "sounds.yml";
 
 	// Set of valid sound enum names as strings
-	private static final Set<String> validSoundNames = new HashSet<>();
+	static final Set<String> validSoundNames = new HashSet<>();
 
 
 	/**
@@ -81,7 +81,6 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	protected Collection<String> getConfigSounds() {
 		return sounds.getKeys(false);
 	}
-
 
 	/**
 	 * Load sound configuration from yaml file
@@ -238,4 +237,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		}
 	}
 
+	public Set<String> getSoundNames() {
+		return sounds.getKeys(false);
+	}
 }
