@@ -23,7 +23,6 @@ public interface SoundConfiguration {
 	 */
 	void playSound(final CommandSender sender, final Enum<?> soundId);
 
-
 	/**
 	 * Play sound effect for location
 	 *
@@ -34,4 +33,18 @@ public interface SoundConfiguration {
 
 	Collection<String> getSoundNames();
 
-}
+	/**
+	 * Get valid bukkit sound names for current server
+	 * @return Collection of String of valid sound names
+	 */
+	Collection<String> getValidSoundNames();
+
+	/**
+	 * Get bukkit sound name for sound config file key
+	 * @param key sound config file key
+	 * @return String - the bukkit sound name for key
+	 */
+	String getBukkitSoundName(String key);
+
+
+	}

@@ -30,7 +30,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	private final String soundFileName = "sounds.yml";
 
 	// Set of valid sound enum names as strings
-	static final Set<String> validSoundNames = new HashSet<>();
+	protected static final Set<String> validSoundNames = new HashSet<>();
 
 
 	/**
@@ -53,6 +53,29 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 
 		// load sounds
 		this.reload();
+	}
+
+
+	// some public classes used for testing
+
+	/**
+	 * Get valid bukkit sound names for current server
+	 * @return Collection of String of valid sound names
+	 */
+	@Override
+	public Collection<String> getValidSoundNames() {
+		return validSoundNames;
+	}
+
+
+	/**
+	 * Get bukkit sound name for sound config file key
+	 * @param key sound config file key
+	 * @return String - the bukkit sound name for key
+	 */
+	@Override
+	public String getBukkitSoundName(String key) {
+		return this.sounds.getString(key + ".sound");
 	}
 
 
