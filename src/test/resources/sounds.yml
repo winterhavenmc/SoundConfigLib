@@ -1,5 +1,7 @@
 # Sound configuration file for ${project.name} v${project.version}
 
+# SpawnStar sounds
+
 COMMAND_FAIL:
   enabled: true
   player-only: true
@@ -85,3 +87,58 @@ TELEPORT_SUCCESS_ARRIVAL:
   sound: ENTITY_ENDERMAN_TELEPORT
   volume: 1
   pitch: 1
+
+
+# DeathChest Sounds
+
+CHEST_DENIED_ACCESS:
+  enabled: true
+  player-only: true
+  sound: ENTITY_VILLAGER_NO
+  volume: 1
+  pitch: 1
+
+CHEST_BREAK:
+  enabled: true
+  player-only: true
+  sound: BLOCK_WOOD_BREAK
+  volume: 2
+  pitch: 1
+
+INVENTORY_ADD_ITEM:
+  enabled: true
+  player-only: true
+  sound: ENTITY_ITEM_PICKUP
+  volume: 1
+  pitch: 1
+
+
+# Graveyard Sounds
+
+COMMAND_SUCCESS_DELETE:
+  enabled: true
+  player-only: true
+  sound: ENTITY_IRON_GOLEM_HURT
+  volume: 1
+  pitch: 1
+
+COMMAND_SUCCESS_FORGET:
+  enabled: true
+  player-only: true
+  sound: BLOCK_BEACON_DEACTIVATE
+  volume: 1
+  pitch: 1
+
+COMMAND_SUCCESS_SET:
+  enabled: true
+  player-only: true
+  sound: ENTITY_PLAYER_LEVELUP
+  volume: 1
+  pitch: 1.25
+
+ACTION_DISCOVERY:
+  enabled: true
+  player-only: true
+  sound: ENTITY_PLAYER_LEVELUP
+  volume: 1
+  pitch: 1.5
