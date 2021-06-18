@@ -106,6 +106,14 @@ class SoundConfigTests {
         }
 
         @ParameterizedTest
+        @MethodSource("SoundConfigFileKeys")
+        @DisplayName("Test sound file key has valid bukkit sound name")
+        void SoundConfigFileHasValidBukkitSound(String key) {
+            Assertions.assertTrue(plugin.soundConfig.getValidSoundNames().contains(plugin.soundConfig.getBukkitSoundName(key)));
+            System.out.println("File key: " + key + " has valid bukkit sound name: " + plugin.soundConfig.getBukkitSoundName(key));
+        }
+
+        @ParameterizedTest
         @EnumSource(SoundId.class)
         @DisplayName("enum member soundId is contained in getConfig() keys.")
         void FileKeysContainsEnumValue(SoundId soundId) {
