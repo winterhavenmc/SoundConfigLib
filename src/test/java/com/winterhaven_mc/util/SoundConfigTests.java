@@ -14,6 +14,8 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
 
+@Tag("SoundConfigTests")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SoundConfigTests {
 
@@ -21,6 +23,13 @@ class SoundConfigTests {
     private WorldMock world;
     private PlayerMock player;
     private PluginMain plugin;
+
+//    @BeforeAll
+//    Beforeall method can be used to initialize properties files, database, etc. The method is static and executes once before running all tests.
+
+//    @AfterAll
+//    This is a static method and runs once after executing all test methods.
+
 
     @BeforeAll
     public void setUp() {
@@ -97,6 +106,14 @@ class SoundConfigTests {
         }
 
         @ParameterizedTest
+        @EnumSource(SoundId.class)
+        @DisplayName("enum member soundId is contained in getConfig() keys.")
+        void FileKeysContainsEnumValue(SoundId soundId) {
+            Assertions.assertTrue(plugin.soundConfig.getYamlSounds().getKeys(false).toString().contains(soundId.name()));
+            System.out.println("Enum value '" + soundId.name() + "' contained in sounds.yml");
+        }
+
+        @ParameterizedTest
         @DisplayName("file config key is contained in enum.")
         @MethodSource("SoundConfigFileKeys")
         void ConfigFileKeyNotNull(String key) {
@@ -111,22 +128,6 @@ class SoundConfigTests {
         void SoundConfigFileHasValidBukkitSound(String key) {
             Assertions.assertTrue(plugin.soundConfig.getValidSoundNames().contains(plugin.soundConfig.getBukkitSoundName(key)));
             System.out.println("File key: " + key + " has valid bukkit sound name: " + plugin.soundConfig.getBukkitSoundName(key));
-        }
-
-        @ParameterizedTest
-        @EnumSource(SoundId.class)
-        @DisplayName("enum member soundId is contained in getConfig() keys.")
-        void FileKeysContainsEnumValue(SoundId soundId) {
-            Assertions.assertTrue(plugin.soundConfig.getYamlSounds().getKeys(false).toString().contains(soundId.name()));
-            System.out.println("Enum value '" + soundId.name() + "' contained in sounds.yml");
-        }
-
-        @ParameterizedTest
-        @EnumSource(SoundId.class)
-        @DisplayName("enum member soundId maps to a valid bukkit sound name.")
-        void ValidBukkitSoundName(SoundId soundId) {
-            Assertions.assertTrue(allBukkitSoundNames.contains(soundId.getBukkitSoundName()));
-            System.out.println("Enum value '" + soundId.name() + "' maps to valid bukkit sound name.");
         }
 
 
