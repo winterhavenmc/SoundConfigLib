@@ -1,15 +1,16 @@
-package com.winterhaven_mc.util;
+package com.winterhaven_mc.util.sounds;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.WorldMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import org.bukkit.Sound;
+import com.winterhaven_mc.util.PluginMain;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -87,29 +88,23 @@ class SoundConfigTests {
     class SoundConfig {
 
         Set<String> enumKeyStrings = new HashSet<>();
-        Set<String> allBukkitSoundNames = new HashSet<>();
 
         public SoundConfig() {
             for (SoundId soundId : SoundId.values()) {
                 this.enumKeyStrings.add(soundId.name());
             }
-
-            // all bukkit sounds
-            for (Sound sound : Sound.values()) {
-                this.allBukkitSoundNames.add(sound.name());
-            }
         }
 
         @SuppressWarnings("unused")
-        Set<String> SoundConfigFileKeys() {
-            return plugin.soundConfig.getSoundNames();
+        Collection<String> SoundConfigFileKeys() {
+            return plugin.soundConfig.getSoundConfigKeys();
         }
 
         @ParameterizedTest
         @EnumSource(SoundId.class)
         @DisplayName("enum member soundId is contained in getConfig() keys.")
         void FileKeysContainsEnumValue(SoundId soundId) {
-            Assertions.assertTrue(plugin.soundConfig.getYamlSounds().getKeys(false).toString().contains(soundId.name()));
+            Assertions.assertTrue(plugin.soundConfig.isValidSoundConfigKey(soundId.name()));
             System.out.println("Enum value '" + soundId.name() + "' contained in sounds.yml");
         }
 
@@ -126,7 +121,7 @@ class SoundConfigTests {
         @MethodSource("SoundConfigFileKeys")
         @DisplayName("Test sound file key has valid bukkit sound name")
         void SoundConfigFileHasValidBukkitSound(String key) {
-            Assertions.assertTrue(plugin.soundConfig.getValidSoundNames().contains(plugin.soundConfig.getBukkitSoundName(key)));
+            Assertions.assertTrue(plugin.soundConfig.isValidBukkitSoundName(plugin.soundConfig.getBukkitSoundName(key)));
             System.out.println("File key: " + key + " has valid bukkit sound name: " + plugin.soundConfig.getBukkitSoundName(key));
         }
 
