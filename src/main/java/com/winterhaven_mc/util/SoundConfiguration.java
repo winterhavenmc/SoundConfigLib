@@ -31,13 +31,27 @@ public interface SoundConfiguration {
 	 */
 	void playSound(final Location location, final Enum<?> soundId);
 
-	Collection<String> getSoundNames();
+	/**
+	 * Test string is valid bukkit sound name
+	 * @param name the string to test
+	 * @return true if passed string is a member of bukkit sounds enum; false if not
+	 */
+	boolean isValidBukkitSoundName(String name);
+
 
 	/**
-	 * Get valid bukkit sound names for current server
-	 * @return Collection of String of valid sound names
+	 * Test string is valid sound config key in sounds.yml file
+	 * @param key the string to test
+	 * @return true if passed string is a valid key in sounds.yml file; false if not
 	 */
-	Collection<String> getValidSoundNames();
+	boolean isValidSoundConfigKey(String key);
+
+
+	/**
+	 * Get String Collection of configuration keys
+	 * @return Collection of String containing config file sound keys
+	 */
+	Collection<String> getSoundConfigKeys();
 
 	/**
 	 * Get bukkit sound name for sound config file key

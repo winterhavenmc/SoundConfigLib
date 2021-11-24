@@ -30,7 +30,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	private final String soundFileName = "sounds.yml";
 
 	// Set of valid sound enum names as strings
-	protected static final Set<String> validSoundNames = new HashSet<>();
+	private static final Set<String> validBukkitSoundNames = new HashSet<>();
 
 
 	/**
@@ -47,8 +47,8 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		this.sounds = new YamlConfiguration();
 
 		// populate valid sound names set
-		for (Sound s : Sound.values()) {
-			validSoundNames.add(s.name());
+		for (Sound sound : Sound.values()) {
+			validBukkitSoundNames.add(sound.name());
 		}
 
 		// load sounds
@@ -56,15 +56,14 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	}
 
 
-	// some public classes used for testing
-
-	/**
-	 * Get valid bukkit sound names for current server
-	 * @return Collection of String of valid sound names
-	 */
 	@Override
-	public Collection<String> getValidSoundNames() {
-		return validSoundNames;
+	public boolean isValidBukkitSoundName(String name) {
+		return validBukkitSoundNames.contains(name);
+	}
+
+	@Override
+	public boolean isValidSoundConfigKey(String key) {
+		return getSoundConfigKeys().contains(key);
 	}
 
 
@@ -85,23 +84,16 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	 * Get sound file name
 	 * @return String - sound file name
 	 */
-	protected String getSoundFileName() {
+	public String getSoundFileName() {
 		return soundFileName;
-	}
-
-	/**
-	 * get yaml sound configuration object
-	 * @return YamlConfiguration - sound configuration object
-	 */
-	protected YamlConfiguration getYamlSounds() {
-		return this.sounds;
 	}
 
 	/**
 	 * get configuration keys as collection of String
 	 * @return Collection of String - configuration keys
 	 */
-	protected Collection<String> getConfigSounds() {
+	@Override
+	public Collection<String> getSoundConfigKeys() {
 		return sounds.getKeys(false);
 	}
 
@@ -193,7 +185,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 			float pitch = (float) sounds.getDouble(soundId + ".pitch");
 
 			// check that sound name is valid
-			if (validSoundNames.contains(soundName)) {
+			if (validBukkitSoundNames.contains(soundName)) {
 
 				// if sound is set player only, use player.playSound()
 				if (playerOnly) {
@@ -245,7 +237,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 			float pitch = (float) sounds.getDouble(soundId + ".pitch");
 
 			// check that sound name is valid
-			if (validSoundNames.contains(soundName)) {
+			if (validBukkitSoundNames.contains(soundName)) {
 
 				// else use world.playSound() so other players in vicinity can hear
 				if (location.getWorld() != null) {
@@ -260,7 +252,4 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		}
 	}
 
-	public Set<String> getSoundNames() {
-		return sounds.getKeys(false);
-	}
 }
