@@ -25,6 +25,11 @@
         </license>
     </licenses>
 
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/tim-savage/SoundConfigLib/issues</url>
+    </issueManagement>
+
     <profiles>
         <profile>
             <id>github</id>
