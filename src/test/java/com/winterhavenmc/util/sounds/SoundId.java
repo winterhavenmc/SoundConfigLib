@@ -1,4 +1,4 @@
-package com.winterhaven_mc.util.sounds;
+package com.winterhavenmc.util.sounds;
 
 
 /**
@@ -29,13 +29,17 @@ public enum SoundId {
     ACTION_DISCOVERY("ENTITY_PLAYER_LEVELUP", true, true, 1, 1.5),
     ;
 
-    protected boolean enabled;
-    protected boolean playerOnly;
-    protected String bukkitSoundName;
-    protected double volume;
-    protected double pitch;
+    final boolean enabled;
+    final boolean playerOnly;
+    final String bukkitSoundName;
+    final double volume;
+    final double pitch;
 
-    SoundId(String bukkitSoundName, boolean enabled, boolean playerOnly, double volume, double pitch) {
+    SoundId(final String bukkitSoundName,
+            final boolean enabled,
+            final boolean playerOnly,
+            final double volume,
+            final double pitch) {
         this.bukkitSoundName = bukkitSoundName;
         this.enabled = enabled;
         this.playerOnly = playerOnly;
@@ -43,6 +47,7 @@ public enum SoundId {
         this.pitch = pitch;
     }
 
+    @SuppressWarnings("unused")
     public String getBukkitSoundName() {
         return bukkitSoundName;
     }

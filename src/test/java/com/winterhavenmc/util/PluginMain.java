@@ -1,4 +1,4 @@
-package com.winterhaven_mc.util;
+package com.winterhavenmc.util;
 
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,7 +10,7 @@ import java.io.File;
  * The main class for SoundConfigTest plugin
  */
 @SuppressWarnings("unused")
-public final class PluginMain extends JavaPlugin {
+public class PluginMain extends JavaPlugin {
 
     public YamlSoundConfiguration soundConfig;
 

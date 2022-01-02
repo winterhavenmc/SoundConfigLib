@@ -1,10 +1,10 @@
-package com.winterhaven_mc.util.sounds;
+package com.winterhavenmc.util.sounds;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.WorldMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import com.winterhaven_mc.util.PluginMain;
+import com.winterhavenmc.util.PluginMain;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -54,7 +54,7 @@ class SoundConfigTests {
 
     @Nested
     @DisplayName("Test mock objects are setup.")
-    class Mocking {
+    class MockingTests {
         @Test
         @DisplayName("Mock server is not null.")
         void MockServerNotNull() {
@@ -85,11 +85,11 @@ class SoundConfigTests {
 
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
-    class SoundConfig {
+    class SoundKeyTests {
 
         Set<String> enumKeyStrings = new HashSet<>();
 
-        public SoundConfig() {
+        public SoundKeyTests() {
             for (SoundId soundId : SoundId.values()) {
                 this.enumKeyStrings.add(soundId.name());
             }
@@ -128,11 +128,11 @@ class SoundConfigTests {
 
         @Nested
         @DisplayName("Play all sounds.")
-        class PlaySounds {
+        class PlaySoundTests {
 
             @Nested
             @DisplayName("Play all sounds in SoundId for player")
-            class PlayerSounds {
+            class PlayerSoundTests {
 
                 private final EnumMap<SoundId, Boolean> soundsPlayed = new EnumMap<>(SoundId.class);
 
@@ -148,7 +148,7 @@ class SoundConfigTests {
 
             @Nested
             @DisplayName("Play all sounds in SoundId at world location")
-            class WorldSounds {
+            class WorldSoundTests {
 
                 private final EnumMap<SoundId, Boolean> soundsPlayed = new EnumMap<>(SoundId.class);
 
