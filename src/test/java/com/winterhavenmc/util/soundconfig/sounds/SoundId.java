@@ -1,4 +1,4 @@
-package com.winterhavenmc.util.sounds;
+package com.winterhavenmc.util.soundconfig.sounds;
 
 
 /**

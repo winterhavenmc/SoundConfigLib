@@ -1,4 +1,4 @@
-package com.winterhavenmc.util;
+package com.winterhavenmc.util.soundconfig;
 
 import org.bukkit.Location;
 import org.bukkit.Sound;

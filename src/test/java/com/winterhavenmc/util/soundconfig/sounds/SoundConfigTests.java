@@ -1,10 +1,10 @@
-package com.winterhavenmc.util.sounds;
+package com.winterhavenmc.util.soundconfig.sounds;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.WorldMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import com.winterhavenmc.util.PluginMain;
+import com.winterhavenmc.util.soundconfig.PluginMain;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

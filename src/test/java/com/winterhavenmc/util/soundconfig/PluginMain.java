@@ -1,4 +1,4 @@
-package com.winterhavenmc.util;
+package com.winterhavenmc.util.soundconfig;
 
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
