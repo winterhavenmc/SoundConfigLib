@@ -36,7 +36,7 @@ public interface SoundConfiguration {
 	 * @param name the string to test
 	 * @return true if passed string is a member of bukkit sounds enum; false if not
 	 */
-	boolean isValidBukkitSoundName(String name);
+	boolean isValidBukkitSoundName(final String name);
 
 
 	/**
@@ -44,7 +44,7 @@ public interface SoundConfiguration {
 	 * @param key the string to test
 	 * @return true if passed string is a valid key in sounds.yml file; false if not
 	 */
-	boolean isValidSoundConfigKey(String key);
+	boolean isValidSoundConfigKey(final String key);
 
 
 	/**
@@ -58,7 +58,6 @@ public interface SoundConfiguration {
 	 * @param key sound config file key
 	 * @return String - the bukkit sound name for key
 	 */
-	String getBukkitSoundName(String key);
+	String getBukkitSoundName(final String key);
 
-
-	}
+}

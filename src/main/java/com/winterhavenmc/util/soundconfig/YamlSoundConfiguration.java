@@ -57,12 +57,12 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 
 
 	@Override
-	public boolean isValidBukkitSoundName(String name) {
+	public boolean isValidBukkitSoundName(final String name) {
 		return validBukkitSoundNames.contains(name);
 	}
 
 	@Override
-	public boolean isValidSoundConfigKey(String key) {
+	public boolean isValidSoundConfigKey(final String key) {
 		return getSoundConfigKeys().contains(key);
 	}
 
@@ -73,7 +73,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	 * @return String - the bukkit sound name for key
 	 */
 	@Override
-	public String getBukkitSoundName(String key) {
+	public String getBukkitSoundName(final String key) {
 		return this.sounds.getString(key + ".sound");
 	}
 
