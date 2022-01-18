@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 
 @SuppressWarnings("unused")
@@ -30,7 +29,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	private final String soundFileName = "sounds.yml";
 
 	// Set of valid sound enum names as strings
-	private static final Set<String> validBukkitSoundNames = new HashSet<>();
+	private static final Collection<String> validBukkitSoundNames = new HashSet<>();
 
 
 	/**
@@ -162,9 +161,12 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		}
 
 		// if sender is not a player do nothing and return
-		if (!(sender instanceof Player player)) {
+		if (!(sender instanceof Player)) {
 			return;
 		}
+
+		// cast sender to player
+		Player player = (Player) sender;
 
 		// if sound is set to enabled in sounds file
 		if (sounds.getBoolean(soundId + ".enabled")) {
