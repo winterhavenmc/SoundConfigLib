@@ -29,7 +29,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	private final String soundFileName = "sounds.yml";
 
 	// Set of valid sound enum names as strings
-	private static final Collection<String> validBukkitSoundNames = new HashSet<>();
+	private final Collection<String> validBukkitSoundNames = new HashSet<>();
 
 
 	/**
