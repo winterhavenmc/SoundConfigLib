@@ -16,6 +16,9 @@ import java.util.HashSet;
 import java.util.Objects;
 
 
+/**
+ * A class that implements SoundConfiguration interface
+ */
 @SuppressWarnings("unused")
 public class YamlSoundConfiguration implements SoundConfiguration {
 

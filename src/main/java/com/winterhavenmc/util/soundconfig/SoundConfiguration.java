@@ -6,6 +6,9 @@ import org.bukkit.command.CommandSender;
 import java.util.Collection;
 
 
+/**
+ * An interface that facilitates loading a custom sound configuration file and provides methods to play sounds in game
+ */
 public interface SoundConfiguration {
 
 
