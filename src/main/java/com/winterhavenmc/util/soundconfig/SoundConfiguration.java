@@ -43,6 +43,7 @@ public interface SoundConfiguration {
 	 */
 	void playSound(final CommandSender sender, final Enum<?> soundId);
 
+
 	/**
 	 * Play sound effect for location
 	 *
@@ -50,6 +51,7 @@ public interface SoundConfiguration {
 	 * @param soundId  the sound identifier enum member
 	 */
 	void playSound(final Location location, final Enum<?> soundId);
+
 
 	/**
 	 * Test string is valid bukkit sound name
@@ -72,6 +74,7 @@ public interface SoundConfiguration {
 	 * @return Collection of String containing config file sound keys
 	 */
 	Collection<String> getSoundConfigKeys();
+
 
 	/**
 	 * Get bukkit sound name for sound config file key

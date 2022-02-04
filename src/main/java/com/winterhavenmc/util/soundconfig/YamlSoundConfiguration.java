@@ -97,8 +97,6 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	}
 
 
-	// some protected classes used for testing
-
 	/**
 	 * Get sound file name
 	 * @return String - sound file name
@@ -106,6 +104,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	public String getSoundFileName() {
 		return soundFileName;
 	}
+
 
 	/**
 	 * get configuration keys as collection of String
@@ -115,6 +114,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	public Collection<String> getSoundConfigKeys() {
 		return sounds.getKeys(false);
 	}
+
 
 	/**
 	 * Load sound configuration from yaml file
