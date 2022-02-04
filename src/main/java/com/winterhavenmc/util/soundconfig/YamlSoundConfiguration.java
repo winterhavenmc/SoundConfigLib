@@ -80,6 +80,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		return validBukkitSoundNames.contains(name);
 	}
 
+
 	@Override
 	public boolean isValidSoundConfigKey(final String key) {
 		return getSoundConfigKeys().contains(key);
