@@ -37,8 +37,8 @@
 			<distributionManagement>
 				<repository>
 					<id>github</id>
-					<name>GitHub tim-savage Apache Maven Packages</name>
-					<url>https://maven.pkg.github.com/tim-savage/SoundConfigLib/</url>
+					<name>GitHub winterhavenmc Apache Maven Packages</name>
+					<url>https://maven.pkg.github.com/winterhavenmc/SoundConfigLib/</url>
 				</repository>
 			</distributionManagement>
 
