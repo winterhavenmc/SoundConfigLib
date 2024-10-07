@@ -6,7 +6,7 @@
 	<version>1.17.2-SNAPSHOT</version>
 	<name>SoundConfigLib</name>
 
-	<url>https://github.com/tim-savage/SoundConfigLib</url>
+	<url>https://github.com/winterhavenmc/SoundConfigLib</url>
 
 	<description>
 		A support library for Minecraft plugins to provide configurable sound effects.
