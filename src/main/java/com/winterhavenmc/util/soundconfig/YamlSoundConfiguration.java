@@ -182,12 +182,9 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		}
 
 		// if sender is not a player do nothing and return
-		if (!(sender instanceof Player)) {
+		if (!(sender instanceof Player player)) {
 			return;
 		}
-
-		// cast sender to player
-		Player player = (Player) sender;
 
 		// if sound is set to enabled in sounds file
 		if (sounds.getBoolean(soundId + ".enabled")) {
