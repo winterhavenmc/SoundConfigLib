@@ -5,6 +5,7 @@ import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.WorldMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import com.winterhavenmc.util.soundconfig.PluginMain;
+import org.bukkit.plugin.Plugin;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -24,6 +25,8 @@ class SoundConfigTests {
     private WorldMock world;
     private PlayerMock player;
     private PluginMain plugin;
+
+    private Plugin plugin = mock(Plugin.class);
 
 //    @BeforeAll
 //    Beforeall method can be used to initialize properties files, database, etc. The method is static and executes once before running all tests.
