@@ -28,7 +28,6 @@ import java.util.Collection;
  */
 public interface SoundConfiguration {
 
-
 	/**
 	 * get all keys from the sound configuration
 	 * @return a Collection of String of sound configuration keys
@@ -48,7 +47,6 @@ public interface SoundConfiguration {
 	 */
 	void playSound(final CommandSender sender, final Enum<?> soundId);
 
-
 	/**
 	 * Play sound effect for location
 	 *
@@ -57,16 +55,13 @@ public interface SoundConfiguration {
 	 */
 	void playSound(final Location location, final Enum<?> soundId);
 
-
-
 	/**
 	 * Test string is valid bukkit sound name
 	 * @param name the string to test
 	 * @return true if passed string is contained in the bukkit sounds enum; false if not
 	 */
-	@Deprecated(forRemoval = true)
+	@Deprecated
 	boolean isValidBukkitSoundName(final String name);
-
 
 	/**
 	 * Test string is valid sound config key in sounds.yml file
