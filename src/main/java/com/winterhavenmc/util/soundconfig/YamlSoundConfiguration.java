@@ -57,7 +57,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		File soundFile = new File(plugin.getDataFolder(), soundFileName);
 
 		// install sounds.yml if not already present and resource exists
-		// this is wrapped in a conditional to prevent log message when file already exists
+		// this is only wrapped in a conditional to prevent log message when file already exists
 		if (!soundFile.exists() && plugin.getResource(soundFileName) != null) {
 			plugin.saveResource(soundFileName, false);
 			//TODO: remove this log message when testing allows
