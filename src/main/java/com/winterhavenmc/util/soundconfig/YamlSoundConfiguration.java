@@ -148,7 +148,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	 * @param soundId the sound identifier enum member
 	 */
 	@Override
-	public final void playSound(final CommandSender sender, final Enum<?> soundId) {
+	public void playSound(final CommandSender sender, final Enum<?> soundId) {
 
 		// if sound effects are configured false, do nothing and return
 		if (!plugin.getConfig().getBoolean("sound-effects")) {
@@ -208,7 +208,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	 * @param soundId  the sound identifier enum member
 	 */
 	@Override
-	public final void playSound(final Location location, final Enum<?> soundId) {
+	public void playSound(final Location location, final Enum<?> soundId) {
 
 		// if location is null, do nothing and return
 		if (location == null) {
