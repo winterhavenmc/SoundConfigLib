@@ -92,8 +92,12 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	}
 
 	@Override
-	public boolean isRegistrySound(final String name) {
-		return Registry.SOUNDS.match(name) != null;
+	public boolean isValidBukkitSoundName(final String key) {
+		Set<String> soundNames = new HashSet<>();
+		for (Sound sound : Sound.values()) {
+			soundNames.add(sound.name());
+		}
+		return soundNames.contains(key);
 	}
 
 	boolean isRegistrySound(final String name) {
