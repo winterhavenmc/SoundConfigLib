@@ -96,6 +96,9 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		return Registry.SOUNDS.match(name) != null;
 	}
 
+	boolean isRegistrySound(final String name) {
+		return Registry.SOUNDS.match(name) != null;
+	}
 
 	@Override
 	public boolean isValidSoundConfigKey(final String key) {
