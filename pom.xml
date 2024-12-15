@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.winterhaven-mc</groupId>
 	<artifactId>sound-config-lib</artifactId>
-	<version>1.17.2-SNAPSHOT</version>
+	<version>1.21.0-SNAPSHOT</version>
 	<name>SoundConfigLib</name>
 
 	<url>https://github.com/winterhavenmc/SoundConfigLib</url>
@@ -15,7 +15,7 @@
 	<properties>
 		<project.author>Tim Savage</project.author>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.release>17</maven.compiler.release>
+		<maven.compiler.release>21</maven.compiler.release>
 	</properties>
 
 	<licenses>
@@ -34,6 +34,9 @@
 	<profiles>
 		<profile>
 			<id>github</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<distributionManagement>
 				<repository>
 					<id>github</id>
@@ -82,11 +85,11 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.19.1-R0.1-SNAPSHOT</version>
+			<version>1.21.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Unit Testing Dependencies -->
+		<!-- Unit Testing Framework -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
@@ -94,11 +97,26 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Unit Testing Parameters -->
 		<dependency>
-			<groupId>com.github.seeseemelk</groupId>
-			<artifactId>MockBukkit-v1.18</artifactId>
-			<version>2.85.2</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<version>5.11.3</version>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- Mockito Framework -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>5.14.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.bytebuddy</groupId>
+			<artifactId>byte-buddy</artifactId>
+			<version>1.15.10</version>
 		</dependency>
 	</dependencies>
 
@@ -141,14 +159,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.9.0</version>
+				<version>3.13.0</version>
 			</plugin>
 
 			<!-- Create Javadoc jar -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.3.1</version>
+				<version>3.8.0</version>
 				<configuration>
 					<doclint>all,-missing</doclint>
 				</configuration>
@@ -166,7 +184,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>3.3.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -181,7 +199,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
+				<version>3.3.1</version>
 
 				<configuration>
 					<junitArtifactName>org.junit.jupiter:junit-jupiter</junitArtifactName>
