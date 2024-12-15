@@ -29,13 +29,16 @@ import java.util.Collection;
 public interface SoundConfiguration {
 
 
+	/**
+	 * get all keys from the sound configuration
+	 * @return a Collection of String of sound configuration keys
+	 */
 	Collection<String> getKeys();
 
 	/**
-	 * Load sound configuration
+	 * Reload sound configuration
 	 */
 	void reload();
-
 
 	/**
 	 * Play sound effect for player
@@ -55,12 +58,14 @@ public interface SoundConfiguration {
 	void playSound(final Location location, final Enum<?> soundId);
 
 
+
 	/**
 	 * Test string is valid bukkit sound name
 	 * @param name the string to test
-	 * @return true if passed string is a member of bukkit sounds enum; false if not
+	 * @return true if passed string is contained in the bukkit sounds enum; false if not
 	 */
-	boolean isRegistrySound(final String name);
+	@Deprecated(forRemoval = true)
+	boolean isValidBukkitSoundName(final String name);
 
 
 	/**
