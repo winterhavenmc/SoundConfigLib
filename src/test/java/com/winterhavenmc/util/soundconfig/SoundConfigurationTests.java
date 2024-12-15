@@ -62,6 +62,7 @@ class SoundConfigurationTests {
 
 	// real uuid for world
 	private final static UUID worldUid = new UUID(1, 1);
+	private SoundConfiguration soundConfiguration;
 
 
 	@BeforeEach
@@ -77,7 +78,7 @@ class SoundConfigurationTests {
 		configuration.loadFromString("sound-effects: true");
 
 		// if sounds.yml resource exists and isn't already installed, copy to temporary data directory
-		// this is only necessary until mocking of saveResource() is implemented
+		// this is only necessary until mocking of plugin.saveResource() is implemented
 		installResource(SOUNDS_RESOURCE, "sounds.yml");
 
 		// return real loggers for plugin and server
@@ -90,9 +91,6 @@ class SoundConfigurationTests {
 		// TODO: mock void method plugin.saveResource("sounds.yml", false) to install resource in temp dir
 //		doReturn(installResource(SOUNDS_RESOURCE, "sounds.yml")).when(plugin).saveResource("sounds.yml", false);
 
-		// responses for mock configuration
-//		when(configuration.getBoolean("sound-effects")).thenReturn(true);
-
 		// responses for mock player
 		when(player.getName()).thenReturn("player_one");
 		when(player.getUniqueId()).thenReturn(playerUid);
@@ -101,11 +99,14 @@ class SoundConfigurationTests {
 		// responses for mock world
 		when(world.getName()).thenReturn("world");
 		when(world.getUID()).thenReturn(worldUid);
+
+		soundConfiguration = new YamlSoundConfiguration(plugin);
 	}
 
 
 	@AfterEach
 	public void tearDown() {
+		soundConfiguration = null;
 		tempDataDirectory = null;
 	}
 
@@ -119,10 +120,10 @@ class SoundConfigurationTests {
 		}
 
 		@Test
-		@DisplayName("SoundConfig is not null.")
+		@DisplayName("SoundConfiguration is not null.")
 		void soundConfigNotNull() {
-			YamlSoundConfiguration yamlSoundConfiguration = new YamlSoundConfiguration(plugin);
-			assertNotNull(yamlSoundConfiguration);
+			SoundConfiguration soundConfiguration = new YamlSoundConfiguration(plugin);
+			assertNotNull(soundConfiguration);
 		}
 
 		@Test
@@ -164,17 +165,15 @@ class SoundConfigurationTests {
 
 	@Test
 	void getKeysTest() {
-		YamlSoundConfiguration yamlSoundConfiguration = new YamlSoundConfiguration(plugin);
-		assertNotNull(yamlSoundConfiguration.getKeys(), "the collection returned is null.");
-		assertFalse(yamlSoundConfiguration.getKeys().isEmpty(), "the collection returned is empty.");
-		assertTrue(yamlSoundConfiguration.getKeys().containsAll(Arrays.asList(soundKeyProvider())),
+		assertNotNull(soundConfiguration.getKeys(), "the collection returned is null.");
+		assertFalse(soundConfiguration.getKeys().isEmpty(), "the collection returned is empty.");
+		assertTrue(soundConfiguration.getKeys().containsAll(Arrays.asList(soundKeyProvider())),
 				"not all keys returned by soundKeyProvider are in the collection returned.");
 	}
 
 	@Test
 	void getSoundConfigKeysTest() {
-		YamlSoundConfiguration yamlSoundConfiguration = new YamlSoundConfiguration(plugin);
-		Collection<String> configKeys = yamlSoundConfiguration.getKeys();
+		Collection<String> configKeys = soundConfiguration.getKeys();
 		System.out.println("got " + configKeys.size() + " config keys.");
 
 		assertFalse(configKeys.isEmpty(), "getSoundConfigKeys() returned an empty collection.");
@@ -184,37 +183,33 @@ class SoundConfigurationTests {
 
 	@Disabled
 	@Test
-	void isRegistrySoundTest() {
-		YamlSoundConfiguration yamlSoundConfiguration = new YamlSoundConfiguration(plugin);
-		assertTrue(yamlSoundConfiguration.isRegistrySound("ENTITY_VILLAGER_NO"));
-		assertFalse(yamlSoundConfiguration.isRegistrySound("invalid_name"));
+	void isValidBukkitSoundNameTest() {
+		assertTrue(soundConfiguration.isValidBukkitSoundName("BLOCK_ANVIL_BREAK"));
+		assertFalse(soundConfiguration.isValidBukkitSoundName("invalid_name"));
 	}
 
 	@Test
 	void isValidSoundConfigKeyTest() {
-		YamlSoundConfiguration yamlSoundConfiguration = new YamlSoundConfiguration(plugin);
-		assertTrue(yamlSoundConfiguration.isValidSoundConfigKey("ENABLED_SOUND"));
-		assertFalse(yamlSoundConfiguration.isValidSoundConfigKey("invalid_key"));
+		assertTrue(soundConfiguration.isValidSoundConfigKey("ENABLED_SOUND"));
+		assertFalse(soundConfiguration.isValidSoundConfigKey("invalid_key"));
 	}
 
 	@Test
 	void getBukkitSoundNameTest() {
-		YamlSoundConfiguration yamlSoundConfiguration = new YamlSoundConfiguration(plugin);
-		assertEquals("ENTITY_VILLAGER_NO", yamlSoundConfiguration.getBukkitSoundName("ENABLED_SOUND"),
+		assertEquals("ENTITY_VILLAGER_NO", soundConfiguration.getBukkitSoundName("ENABLED_SOUND"),
 				"the returned bukkit sound name does not match the expected result string");
-		assertNotEquals("not_a_match", yamlSoundConfiguration.getBukkitSoundName("ENABLED_SOUND"),
+		assertNotEquals("not_a_match", soundConfiguration.getBukkitSoundName("ENABLED_SOUND"),
 				"the returned bukkit sound name matches an invalid name");
-		assertNull(yamlSoundConfiguration.getBukkitSoundName("invalid_key"),
+		assertNull(soundConfiguration.getBukkitSoundName("invalid_key"),
 				"an invalid key returned a non-null value");
 	}
 
 	@Test
 	@DisplayName("Test SoundConfig reload method.")
 	void reloadTest() {
-		YamlSoundConfiguration yamlSoundConfiguration = new YamlSoundConfiguration(plugin);
-		yamlSoundConfiguration.reload();
-		assertNotNull(yamlSoundConfiguration, "soundConfig is null after reload.");
-		assertTrue(yamlSoundConfiguration.isValidSoundConfigKey("ENABLED_SOUND"),
+		soundConfiguration.reload();
+		assertNotNull(soundConfiguration, "soundConfig is null after reload.");
+		assertTrue(soundConfiguration.isValidSoundConfigKey("ENABLED_SOUND"),
 				"expected config key is not valid after reload.");
 	}
 
@@ -236,7 +231,7 @@ class SoundConfigurationTests {
 	public static File createTempDataDir() throws IOException {
 		String tempDataDirectoryPath = Files.createTempDirectory("PluginData").toFile().getAbsolutePath();
 		File tempDir = new File(tempDataDirectoryPath);
-		boolean success = tempDir.mkdirs();
+		@SuppressWarnings("unused") boolean success = tempDir.mkdirs();
 		if (!tempDir.isDirectory()) {
 			throw new IOException();
 		} else {
