@@ -1,5 +1,0 @@
-name: ${project.name}
-main: com.winterhavenmc.util.soundconfig.PluginMain
-author: ${project.author}
-version: ${project.version}
-api-version: 1.16
