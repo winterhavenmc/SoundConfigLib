@@ -19,6 +19,7 @@ package com.winterhavenmc.util.soundconfig;
 
 import org.bukkit.Location;
 import org.bukkit.Registry;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -78,10 +79,10 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		try {
 			this.soundsConfig.load(soundFile);
 		}
-		catch (FileNotFoundException e) {
+		catch (IOException e) {
 			plugin.getLogger().severe(e.getLocalizedMessage());
 		}
-		catch (IOException | InvalidConfigurationException e) {
+		catch (InvalidConfigurationException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -135,7 +136,11 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		}
 		try {
 			soundsConfig.load(soundFile);
-		} catch (IOException | InvalidConfigurationException e) {
+		}
+		catch (IOException e) {
+			plugin.getLogger().severe(e.getLocalizedMessage());
+		}
+		catch (InvalidConfigurationException e) {
 			throw new RuntimeException(e);
 		}
 	}
