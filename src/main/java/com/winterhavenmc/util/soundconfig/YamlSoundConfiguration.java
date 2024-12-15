@@ -53,7 +53,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		// set reference to main class
 		this.plugin = plugin;
 
-		// get file handle to sounds.yml file
+		// get file handle to sounds.yml file in plugin data directory
 		File soundFile = new File(plugin.getDataFolder(), soundFileName);
 
 		// install sounds.yml if not already present and resource exists
