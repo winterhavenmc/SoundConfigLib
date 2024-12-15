@@ -29,6 +29,8 @@ import java.util.Collection;
 public interface SoundConfiguration {
 
 
+	Collection<String> getKeys();
+
 	/**
 	 * Load sound configuration
 	 */
@@ -58,7 +60,7 @@ public interface SoundConfiguration {
 	 * @param name the string to test
 	 * @return true if passed string is a member of bukkit sounds enum; false if not
 	 */
-	boolean isValidBukkitSoundName(final String name);
+	boolean isRegistrySound(final String name);
 
 
 	/**
@@ -67,13 +69,6 @@ public interface SoundConfiguration {
 	 * @return true if passed string is a valid key in sounds.yml file; false if not
 	 */
 	boolean isValidSoundConfigKey(final String key);
-
-
-	/**
-	 * Get String Collection of configuration keys
-	 * @return Collection of String containing config file sound keys
-	 */
-	Collection<String> getSoundConfigKeys();
 
 
 	/**
