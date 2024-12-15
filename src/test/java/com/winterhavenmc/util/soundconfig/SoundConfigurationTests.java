@@ -41,7 +41,7 @@ import static org.mockito.Mockito.*;
 class SoundConfigurationTests {
 
 	// resource as input stream
-	private final static InputStream SOUNDS_RESOURCE = Thread.currentThread().getContextClassLoader().getResourceAsStream("sounds.yml");
+	InputStream SOUNDS_RESOURCE;
 
 	// temporary plugin data directory for testing
 	File tempDataDirectory;
@@ -75,9 +75,6 @@ class SoundConfigurationTests {
 
 		// load real configuration from string
 		configuration.loadFromString("sound-effects: true");
-
-		// create temporary data directory for mock plugin
-		tempDataDirectory = createTempDataDir();
 
 		// if sounds.yml resource exists and isn't already installed, copy to temporary data directory
 		// this is only necessary until mocking of saveResource() is implemented
