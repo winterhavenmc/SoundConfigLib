@@ -67,6 +67,12 @@ class SoundConfigurationTests {
 	@BeforeEach
 	public void setUp() throws IOException, InvalidConfigurationException {
 
+		// get sound.yml resource as a stream
+		SOUNDS_RESOURCE = Thread.currentThread().getContextClassLoader().getResourceAsStream("sounds.yml");
+
+		// create temporary data directory for mock plugin
+		tempDataDirectory = createTempDataDir();
+
 		// load real configuration from string
 		configuration.loadFromString("sound-effects: true");
 
