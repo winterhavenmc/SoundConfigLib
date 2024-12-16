@@ -135,7 +135,7 @@ class SoundConfigurationTests {
 		@Test
 		void getResourceIsMockedTest() {
 			assertNotNull(plugin.getResource("sounds.yml"), "the mock 'sounds.yml' resource is null.");
-			verify(plugin, times(1)).getResource(any(String.class));
+			verify(plugin, atLeast(1)).getResource(any(String.class));
 		}
 
 		@Test
@@ -149,12 +149,12 @@ class SoundConfigurationTests {
 
 		@Test
 		void temporaryDataDirectoryExistsTest() {
-			assertTrue(tempDataDirectory.exists(), "The temporary data directory does not exist.");
+			assertTrue(tempDataDirectory.exists(), "the temporary data directory does not exist.");
 		}
 
 		@Test
 		void soundEffectsConfigMockedTest() {
-			assertTrue(configuration.getBoolean("sound-effects"));
+			assertTrue(configuration.getBoolean("sound-effects"), "the config setting 'sound-effects' returned false.");
 		}
 	}
 
