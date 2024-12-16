@@ -63,6 +63,8 @@ class SoundConfigurationTests {
 
 	// real uuid for world
 	private final static UUID worldUid = new UUID(1, 1);
+
+	// real sound configuration
 	private SoundConfiguration soundConfiguration;
 
 
@@ -78,10 +80,6 @@ class SoundConfigurationTests {
 		// load real configuration from string
 		configuration.loadFromString("sound-effects: true");
 
-		// if sounds.yml resource exists and isn't already installed, copy to temporary data directory
-		// this is only necessary until mocking of plugin.saveResource() is implemented
-		installResource(SOUNDS_RESOURCE, "sounds.yml");
-
 		// setup mock server
 		MockServer.setup();
 
@@ -91,8 +89,10 @@ class SoundConfigurationTests {
 		when(plugin.getConfig()).thenReturn(configuration);
 		when(plugin.getDataFolder()).thenReturn(tempDataDirectory);
 		when(plugin.getResource("sounds.yml")).thenReturn(SOUNDS_RESOURCE);
-		// TODO: mock void method plugin.saveResource("sounds.yml", false) to install resource in temp dir
-//		doReturn(installResource(SOUNDS_RESOURCE, "sounds.yml")).when(plugin).saveResource("sounds.yml", false);
+		doAnswer(invocation -> {
+				installResource(SOUNDS_RESOURCE, "sounds.yml");
+				return null;
+			}).when(plugin).saveResource("sounds.yml", false);
 
 		// responses for mock player
 		when(player.getName()).thenReturn("player_one");
@@ -135,6 +135,7 @@ class SoundConfigurationTests {
 		@Test
 		void getResourceIsMockedTest() {
 			assertNotNull(plugin.getResource("sounds.yml"), "the mock 'sounds.yml' resource is null.");
+			verify(plugin, atLeast(1)).getResource(any(String.class));
 		}
 
 		@Test
@@ -148,12 +149,12 @@ class SoundConfigurationTests {
 
 		@Test
 		void temporaryDataDirectoryExistsTest() {
-			assertTrue(tempDataDirectory.exists(), "The temporary data directory does not exist.");
+			assertTrue(tempDataDirectory.exists(), "the temporary data directory does not exist.");
 		}
 
 		@Test
 		void soundEffectsConfigMockedTest() {
-			assertTrue(configuration.getBoolean("sound-effects"));
+			assertTrue(configuration.getBoolean("sound-effects"), "the config setting 'sound-effects' returned false.");
 		}
 	}
 
@@ -266,11 +267,10 @@ class SoundConfigurationTests {
 			long bytesCopied = Files.copy(inputStream, Paths.get(tempDataDirectory.getPath(), destination));
 			if (bytesCopied > 0) {
 				success = true;
-				System.out.println(destination + " resource installed to temporary data directory by testing setup method. Bytes copied: " + bytesCopied);
 			}
 		}
 		else {
-			System.out.println("inputStream is null.");
+			throw new IOException("InputStream for 'sounds.yml' resource is null.");
 		}
 		return success;
 	}

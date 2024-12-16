@@ -98,7 +98,7 @@ public final class MockServer {
 			}
 
 			@Override
-			public Iterator<Keyed> iterator() {
+			public @NotNull Iterator<Keyed> iterator() {
 				throw new UnsupportedOperationException("Not supported");
 			}
 		}));
