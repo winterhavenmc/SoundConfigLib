@@ -80,10 +80,6 @@ class SoundConfigurationTests {
 		// load real configuration from string
 		configuration.loadFromString("sound-effects: true");
 
-		// if sounds.yml resource exists and isn't already installed, copy to temporary data directory
-		// this is only necessary until mocking of plugin.saveResource() is implemented
-//		installResource(SOUNDS_RESOURCE, "sounds.yml");
-
 		// setup mock server
 		MockServer.setup();
 
