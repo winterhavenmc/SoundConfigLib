@@ -62,15 +62,6 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		// this is only wrapped in a conditional to prevent log message when file already exists
 		if (!soundFile.exists() && plugin.getResource(soundFileName) != null) {
 			plugin.saveResource(soundFileName, false);
-			//TODO: remove this log message when testing allows
-			plugin.getLogger().info(soundFileName + " was installed by call to plugin.saveResource() in YamlSoundConfiguration constructor.");
-			plugin.getLogger().info("Path: " + soundFile.getPath());
-			if (soundFile.exists()) {
-				plugin.getLogger().info("file has been successfully copied from resource.");
-			}
-			else {
-				plugin.getLogger().severe("file was not copied from resource.");
-			}
 		}
 
 		// instantiate sounds configuration object
