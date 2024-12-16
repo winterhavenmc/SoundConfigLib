@@ -19,15 +19,16 @@ package com.winterhavenmc.util.soundconfig;
 
 import org.bukkit.Location;
 import org.bukkit.Registry;
-import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
+import java.util.Set;
 
 
 /**
@@ -92,16 +93,21 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		return this.soundsConfig.getKeys(false);
 	}
 
-	@Override
-	public boolean isValidBukkitSoundName(final String key) {
-		Set<String> soundNames = new HashSet<>();
-		for (Sound sound : Sound.values()) {
-			soundNames.add(sound.name());
-		}
-		return soundNames.contains(key);
+	SoundEntry getEntry(final Enum<?> soundId) {
+		return new SoundEntry(soundId.name(),
+				soundsConfig.getBoolean(soundId + ".enabled"),
+				soundsConfig.getBoolean(soundId + ".player-only"),
+				soundsConfig.getString(soundId + ".sound"),
+				(float) soundsConfig.getDouble(soundId + ".volume"),
+				(float) soundsConfig.getDouble(soundId + ".pitch"));
 	}
 
-	boolean isRegistrySound(final String name) {
+	@Override
+	public boolean isValidBukkitSoundName(final String key) {
+		return isRegistrySound(key);
+	}
+
+	public boolean isRegistrySound(final String name) {
 		return Registry.SOUNDS.match(name) != null;
 	}
 
@@ -156,7 +162,7 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 	public void playSound(final CommandSender sender, final Enum<?> soundId) {
 
 		// if sound effects are configured false, do nothing and return
-		if (!plugin.getConfig().getBoolean("sound-effects")) {
+		if (soundEffectsDisabled()) {
 			return;
 		}
 
@@ -165,41 +171,26 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 			return;
 		}
 
+		SoundEntry entry = getEntry(soundId);
+
 		// if sound is set to enabled in sounds file
-		if (soundsConfig.getBoolean(soundId + ".enabled")) {
-
-			// get player only setting from config file
-			boolean playerOnly = soundsConfig.getBoolean(soundId + ".player-only");
-
-			// get sound name from config file
-			String soundName = soundsConfig.getString(soundId + ".sound");
-
-			// get sound volume from config file
-			float volume = (float) soundsConfig.getDouble(soundId + ".volume");
-
-			// get sound pitch from config file
-			float pitch = (float) soundsConfig.getDouble(soundId + ".pitch");
-
-			if (soundName == null) {
-				soundName = "";
-			}
+		if (entry.enabled()) {
 
 			// check that sound name is valid
-			if (Registry.SOUNDS.match(soundName) != null) {
-//			if (validBukkitSoundNames.contains(soundName)) {
+			if (Registry.SOUNDS.match(entry.bukkitSoundName()) != null) {
 
 				// if sound is set player only, use player.playSound()
-				if (playerOnly) {
-					player.playSound(player.getLocation(), Objects.requireNonNull(Registry.SOUNDS.match(soundName)), volume, pitch);
+				if (entry.playerOnly()) {
+					player.playSound(player.getLocation(), Objects.requireNonNull(Registry.SOUNDS.match(entry.bukkitSoundName())), entry.volume(), entry.pitch());
 				}
 				// else use world.playSound() so other players in vicinity can hear
 				else {
-					player.getWorld().playSound(player.getLocation(), Objects.requireNonNull(Registry.SOUNDS.match(soundName)), volume, pitch);
+					player.getWorld().playSound(player.getLocation(), Objects.requireNonNull(Registry.SOUNDS.match(entry.bukkitSoundName())), entry.volume(), entry.pitch());
 				}
 			}
 			else {
 				plugin.getLogger().warning("An error occurred while trying to play the sound '"
-						+ soundName + "'. You probably need to update the sound name in your "
+						+ entry.bukkitSoundName() + "'. You probably need to update the sound name in your "
 						+ soundFileName + " file.");
 			}
 		}
@@ -221,36 +212,36 @@ public class YamlSoundConfiguration implements SoundConfiguration {
 		}
 
 		// if sound effects are configured false, do nothing and return
-		if (!plugin.getConfig().getBoolean("sound-effects")) {
+		if (soundEffectsDisabled()) {
 			return;
 		}
 
+		SoundEntry soundEntry = getEntry(soundId);
+
 		// if sound is set to enabled in sounds file
-		if (soundsConfig.getBoolean(soundId.toString() + ".enabled")) {
-
-			// get sound name from config file
-			String soundName = soundsConfig.getString(soundId + ".sound");
-
-			// get sound volume from config file
-			float volume = (float) soundsConfig.getDouble(soundId + ".volume");
-
-			// get sound pitch from config file
-			float pitch = (float) soundsConfig.getDouble(soundId + ".pitch");
+		if (soundEntry.enabled()) {
 
 			// check that sound name is valid
-			if (soundName != null && Registry.SOUNDS.match(soundName) != null) {
+			if (soundEntry.bukkitSoundName() != null && Registry.SOUNDS.match(soundEntry.bukkitSoundName()) != null) {
 
 				// else use world.playSound() so other players in vicinity can hear
 				if (location.getWorld() != null) {
-					location.getWorld().playSound(location, Objects.requireNonNull(Registry.SOUNDS.match(soundName)), volume, pitch);
+					location.getWorld().playSound(location,
+							Objects.requireNonNull(Registry.SOUNDS.match(soundEntry.bukkitSoundName())),
+							soundEntry.volume(),
+							soundEntry.pitch());
 				}
 			}
 			else {
 				plugin.getLogger().warning("An error occurred while trying to play the sound '"
-						+ soundName + "'. You probably need to update the sound name in your "
+						+ soundEntry.bukkitSoundName() + "'. You probably need to update the sound name in your "
 						+ soundFileName + " file.");
 			}
 		}
+	}
+
+	boolean soundEffectsDisabled() {
+		return !plugin.getConfig().getBoolean("sound-effects");
 	}
 
 }
