@@ -17,6 +17,7 @@
 
 package com.winterhavenmc.util.soundconfig;
 
+import com.winterhavenmc.util.soundconfig.Server.MockServer;
 import com.winterhavenmc.util.soundconfig.sounds.SoundId;
 import org.bukkit.*;
 
@@ -46,7 +47,7 @@ class SoundConfigurationTests {
 	// temporary plugin data directory for testing
 	File tempDataDirectory;
 
-	// real plugin configuration
+	// real plugin configuration object
 	FileConfiguration configuration = new YamlConfiguration();
 
 	// mocks
@@ -81,10 +82,12 @@ class SoundConfigurationTests {
 		// this is only necessary until mocking of plugin.saveResource() is implemented
 		installResource(SOUNDS_RESOURCE, "sounds.yml");
 
-		// return real loggers for plugin and server
-		when(plugin.getLogger()).thenReturn(Logger.getLogger("Mock Plugin"));
+		// setup mock server
+		MockServer.setup();
 
 		// responses for mock plugin
+		when(plugin.getLogger()).thenReturn(Logger.getLogger("Mock Plugin"));
+		when(plugin.getServer()).thenReturn(MockServer.getInstance());
 		when(plugin.getConfig()).thenReturn(configuration);
 		when(plugin.getDataFolder()).thenReturn(tempDataDirectory);
 		when(plugin.getResource("sounds.yml")).thenReturn(SOUNDS_RESOURCE);
@@ -114,13 +117,11 @@ class SoundConfigurationTests {
 	class MockingSetupTests {
 
 		@Test
-		@DisplayName("Mock plugin is not null.")
 		void MockPluginNotNull() {
 			assertNotNull(plugin);
 		}
 
 		@Test
-		@DisplayName("SoundConfiguration is not null.")
 		void soundConfigNotNull() {
 			SoundConfiguration soundConfiguration = new YamlSoundConfiguration(plugin);
 			assertNotNull(soundConfiguration);
@@ -132,7 +133,6 @@ class SoundConfigurationTests {
 		}
 
 		@Test
-		@DisplayName("Plugin method getResource(\"sounds.yml\") is mocked.")
 		void getResourceIsMockedTest() {
 			assertNotNull(plugin.getResource("sounds.yml"), "the mock 'sounds.yml' resource is null.");
 		}
@@ -174,8 +174,6 @@ class SoundConfigurationTests {
 	@Test
 	void getSoundConfigKeysTest() {
 		Collection<String> configKeys = soundConfiguration.getKeys();
-		System.out.println("got " + configKeys.size() + " config keys.");
-
 		assertFalse(configKeys.isEmpty(), "getSoundConfigKeys() returned an empty collection.");
 		assertEquals(3, configKeys.size(),
 				"There should have been 3 keys returned, but there were " + configKeys.size() + ".");
@@ -186,6 +184,14 @@ class SoundConfigurationTests {
 	void isValidBukkitSoundNameTest() {
 		assertTrue(soundConfiguration.isValidBukkitSoundName("BLOCK_ANVIL_BREAK"));
 		assertFalse(soundConfiguration.isValidBukkitSoundName("invalid_name"));
+	}
+
+	@Disabled
+	@Test
+	void isRegistrySoundTest() {
+		YamlSoundConfiguration yamlSoundConfiguration = new YamlSoundConfiguration(plugin);
+		assertTrue(yamlSoundConfiguration.isRegistrySound("BLOCK_ANVIL_BREAK"));
+		assertFalse(yamlSoundConfiguration.isRegistrySound("invalid_name"));
 	}
 
 	@Test
@@ -205,16 +211,27 @@ class SoundConfigurationTests {
 	}
 
 	@Test
-	@DisplayName("Test SoundConfig reload method.")
 	void reloadTest() {
 		soundConfiguration.reload();
 		assertNotNull(soundConfiguration, "soundConfig is null after reload.");
 		assertTrue(soundConfiguration.isValidSoundConfigKey("ENABLED_SOUND"),
-				"expected config key is not valid after reload.");
+				"expected configuration key could not be found after reloading configuration.");
+	}
+
+	@Test
+	void getEntryTest() {
+		YamlSoundConfiguration soundConfiguration = new YamlSoundConfiguration(plugin);
+		SoundEntry soundEntry = soundConfiguration.getEntry(SoundId.ENABLED_SOUND);
+		assertEquals("ENABLED_SOUND", soundEntry.key());
+		assertTrue(soundEntry.enabled());
+		assertTrue(soundEntry.playerOnly());
+		assertEquals("ENTITY_VILLAGER_NO", soundEntry.bukkitSoundName());
+		assertEquals(1.0f, soundEntry.volume());
+		assertEquals(2.0f, soundEntry.pitch());
 	}
 
 
-// TESTING HELPER METHODS
+	// TESTING HELPER METHODS
 
 	/**
 	 * get an array of config enum constant names
