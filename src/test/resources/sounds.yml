@@ -4,7 +4,7 @@ ENABLED_SOUND:
   player-only: true
   sound: ENTITY_VILLAGER_NO
   volume: 1
-  pitch: 1
+  pitch: 2
 
 DISABLED_SOUND:
   enabled: false
