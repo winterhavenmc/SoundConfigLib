@@ -90,7 +90,7 @@ class SoundConfigurationTests {
 		when(plugin.getDataFolder()).thenReturn(tempDataDirectory);
 		when(plugin.getResource("sounds.yml")).thenReturn(SOUNDS_RESOURCE);
 		doAnswer(invocation -> {
-				installResource(SOUNDS_RESOURCE, "sounds.yml");
+				installResource("sounds.yml");
 				return null;
 			}).when(plugin).saveResource("sounds.yml", false);
 
@@ -259,18 +259,20 @@ class SoundConfigurationTests {
 	}
 
 	@SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
-	private boolean installResource(final InputStream inputStream, final String destination) throws IOException {
+	private boolean installResource(final String name) throws IOException {
+
+		InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
 
 		boolean success = false;
 
 		if (inputStream != null) {
-			long bytesCopied = Files.copy(inputStream, Paths.get(tempDataDirectory.getPath(), destination));
+			long bytesCopied = Files.copy(inputStream, Paths.get(tempDataDirectory.getPath(), name));
 			if (bytesCopied > 0) {
 				success = true;
 			}
 		}
 		else {
-			throw new IOException("InputStream for 'sounds.yml' resource is null.");
+			throw new IOException("InputStream for '" + name + "' resource is null.");
 		}
 		return success;
 	}
