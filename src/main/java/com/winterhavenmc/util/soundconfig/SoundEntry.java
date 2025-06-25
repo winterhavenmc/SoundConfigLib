@@ -31,19 +31,24 @@ public record SoundEntry(String key,
                          boolean playerOnly,
                          String bukkitSoundName,
                          float volume,
-                         float pitch) {
-
-	public SoundEntry {
-		if (key == null) {
+                         float pitch)
+{
+	public SoundEntry
+	{
+		if (key == null)
+		{
 			throw new IllegalArgumentException("The key was null.");
 		}
-		if (key.isBlank()) {
+		if (key.isBlank())
+		{
 			throw new IllegalArgumentException("The key was blank.");
 		}
-		if (bukkitSoundName == null) {
+		if (bukkitSoundName == null)
+		{
 			throw new IllegalArgumentException("The sound name was null.");
 		}
-		if (bukkitSoundName.isBlank()) {
+		if (bukkitSoundName.isBlank())
+		{
 			throw new IllegalArgumentException("The sound name was blank.");
 		}
 	}
