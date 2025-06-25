@@ -23,73 +23,96 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SoundEntryTest {
-
+class SoundEntryTest
+{
 	SoundEntry soundEntry;
 
+
 	@BeforeEach
-	void setUp() {
+	void setUp()
+	{
 		soundEntry = new SoundEntry("ENABLED_SOUND", true, true, "ENTITY_VILLAGER_NO", 1.0f, 2.0f);
 	}
 
 	@AfterEach
-	void tearDown() {
+	void tearDown()
+	{
 		soundEntry = null;
 	}
 
+
 	@Test
-	void key() {
+	void key()
+	{
 		assertEquals("ENABLED_SOUND", soundEntry.key());
 	}
 
+
 	@Test
-	void enabled() {
+	void enabled()
+	{
 		assertTrue(soundEntry.enabled());
 	}
 
+
 	@Test
-	void playerOnly() {
+	void playerOnly()
+	{
 		assertTrue(soundEntry.playerOnly());
 	}
 
+
 	@Test
-	void bukkitSoundName() {
+	void bukkitSoundName()
+	{
 		assertEquals("ENTITY_VILLAGER_NO", soundEntry.bukkitSoundName());
 	}
 
+
 	@Test
-	void volume() {
+	void volume()
+	{
 		assertEquals(1.0f, soundEntry.volume());
 	}
 
+
 	@Test
-	void pitch() {
+	void pitch()
+	{
 		assertEquals(2.0f, soundEntry.pitch());
 	}
 
+
 	@Test
-	void key_blank() {
+	void key_blank()
+	{
 		IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
 				new SoundEntry("", true, true, "ENTITY_VILLAGER_NO", 1.0f, 2.0f));
 		assertEquals("The key was blank.", e.getMessage());
 	}
 
+
 	@Test
-	void key_null() {
+	void key_null()
+	{
 		IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
 				new SoundEntry(null, true, true, "ENTITY_VILLAGER_NO", 1.0f, 2.0f));
 		assertEquals("The key was null.", e.getMessage());
 	}
 
+
 	@Test
-	void soundName_blank() {
+	void soundName_blank()
+	{
 		IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
 				new SoundEntry("ENABLED_SOUND", true, true, "", 1.0f, 2.0f));
 		assertEquals("The sound name was blank.", e.getMessage());
 	}
 
+
 	@Test
-	void soundName_null() {
+	void soundName_null()
+	{
 		IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
 				new SoundEntry("ENABLED_SOUND", true, true, null, 1.0f, 2.0f));
 		assertEquals("The sound name was null.", e.getMessage());
