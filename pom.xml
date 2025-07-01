@@ -44,21 +44,21 @@
 					<url>https://maven.pkg.github.com/winterhavenmc/SoundConfigLib/</url>
 				</repository>
 			</distributionManagement>
-
-			<repositories>
-				<repository>
-					<id>spigot-repo</id>
-					<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-				</repository>
-			</repositories>
 		</profile>
 	</profiles>
+
+	<repositories>
+		<repository>
+			<id>spigot-repo</id>
+			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.21.6-R0.1-SNAPSHOT</version>
+			<version>1.21.7-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 
