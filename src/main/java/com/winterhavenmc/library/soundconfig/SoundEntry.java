@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Tim Savage.
+ * Copyright (c) 2024-2025 Tim Savage.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  *
  */
 
-package com.winterhavenmc.util.soundconfig;
+package com.winterhavenmc.library.soundconfig;
 
 /**
  * A class that contains the key and fields of a sound entry in the sound configuration
