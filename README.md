@@ -8,3 +8,8 @@
 A lightweight library for Bukkit plugins that manages a user editable 
 sound configuration file and provides convenient methods to play 
 configured sounds in-game.
+
+## This repository has been archived.
+
+The functionality of this library has been incorporated into
+[MessageBuilderLib](http://github.com/winterhavenmc/MessageBuilderLib).
