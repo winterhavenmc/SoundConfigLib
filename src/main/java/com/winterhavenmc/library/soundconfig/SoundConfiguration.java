@@ -26,18 +26,21 @@ import java.util.Collection;
 /**
  * An interface that facilitates loading a custom sound configuration file and provides methods to play sounds in game
  */
-public interface SoundConfiguration {
-
+public interface SoundConfiguration
+{
 	/**
 	 * get all keys from the sound configuration
+	 *
 	 * @return a Collection of String of sound configuration keys
 	 */
 	Collection<String> getKeys();
+
 
 	/**
 	 * Reload sound configuration
 	 */
 	void reload();
+
 
 	/**
 	 * Play sound effect for player
@@ -47,6 +50,7 @@ public interface SoundConfiguration {
 	 */
 	void playSound(final CommandSender sender, final Enum<?> soundId);
 
+
 	/**
 	 * Play sound effect for location
 	 *
@@ -55,16 +59,20 @@ public interface SoundConfiguration {
 	 */
 	void playSound(final Location location, final Enum<?> soundId);
 
+
 	/**
 	 * Test string is valid bukkit sound name
+	 *
 	 * @param name the string to test
 	 * @return true if passed string is contained in the bukkit sounds enum; false if not
 	 */
 	@Deprecated
 	boolean isValidBukkitSoundName(final String name);
 
+
 	/**
 	 * Test string is valid sound config key in sounds.yml file
+	 *
 	 * @param key the string to test
 	 * @return true if passed string is a valid key in sounds.yml file; false if not
 	 */
@@ -73,6 +81,7 @@ public interface SoundConfiguration {
 
 	/**
 	 * Get bukkit sound name for sound config file key
+	 *
 	 * @param key sound config file key
 	 * @return String - the bukkit sound name for key
 	 */
