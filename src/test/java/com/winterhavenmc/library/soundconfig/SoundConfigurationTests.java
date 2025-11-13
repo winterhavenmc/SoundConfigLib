@@ -222,13 +222,13 @@ class SoundConfigurationTests {
 	@Test
 	void getEntryTest() {
 		YamlSoundConfiguration soundConfiguration = new YamlSoundConfiguration(plugin);
-		SoundEntry soundEntry = soundConfiguration.getEntry(SoundId.ENABLED_SOUND);
-		assertEquals("ENABLED_SOUND", soundEntry.key());
-		assertTrue(soundEntry.enabled());
-		assertTrue(soundEntry.playerOnly());
-		assertEquals("ENTITY_VILLAGER_NO", soundEntry.bukkitSoundName());
-		assertEquals(1.0f, soundEntry.volume());
-		assertEquals(2.0f, soundEntry.pitch());
+		ValidSoundEntry validSoundEntry = soundConfiguration.getEntry(SoundId.ENABLED_SOUND);
+		assertEquals("ENABLED_SOUND", validSoundEntry.key());
+		assertTrue(validSoundEntry.enabled());
+		assertTrue(validSoundEntry.playerOnly());
+		assertEquals("ENTITY_VILLAGER_NO", validSoundEntry.bukkitSoundName());
+		assertEquals(1.0f, validSoundEntry.volume());
+		assertEquals(2.0f, validSoundEntry.pitch());
 	}
 
 

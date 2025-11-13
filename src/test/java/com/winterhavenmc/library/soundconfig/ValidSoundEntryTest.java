@@ -21,29 +21,30 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SoundEntryTest
+
+class ValidSoundEntryTest
 {
-	SoundEntry soundEntry;
+	ValidSoundEntry validSoundEntry;
 
 
 	@BeforeEach
 	void setUp()
 	{
-		soundEntry = new SoundEntry("ENABLED_SOUND", true, true, "ENTITY_VILLAGER_NO", 1.0f, 2.0f);
+		validSoundEntry = new ValidSoundEntry("ENABLED_SOUND", true, true, "ENTITY_VILLAGER_NO", 1.0f, 2.0f);
 	}
 
 	@AfterEach
 	void tearDown()
 	{
-		soundEntry = null;
+		validSoundEntry = null;
 	}
 
 
 	@Test
 	void key()
 	{
+		SoundEntry soundEntry = SoundEntry.of("ENABLED_SOUND", true, true, "ENTITY_VILLAGER_NO", 1.0f, 2.0f);
+		assertInstanceOf(ValidSoundEntry.class, soundEntry);
 		assertEquals("ENABLED_SOUND", soundEntry.key());
 	}
 
@@ -51,35 +52,35 @@ class SoundEntryTest
 	@Test
 	void enabled()
 	{
-		assertTrue(soundEntry.enabled());
+		assertTrue(validSoundEntry.enabled());
 	}
 
 
 	@Test
 	void playerOnly()
 	{
-		assertTrue(soundEntry.playerOnly());
+		assertTrue(validSoundEntry.playerOnly());
 	}
 
 
 	@Test
 	void bukkitSoundName()
 	{
-		assertEquals("ENTITY_VILLAGER_NO", soundEntry.bukkitSoundName());
+		assertEquals("ENTITY_VILLAGER_NO", validSoundEntry.bukkitSoundName());
 	}
 
 
 	@Test
 	void volume()
 	{
-		assertEquals(1.0f, soundEntry.volume());
+		assertEquals(1.0f, validSoundEntry.volume());
 	}
 
 
 	@Test
 	void pitch()
 	{
-		assertEquals(2.0f, soundEntry.pitch());
+		assertEquals(2.0f, validSoundEntry.pitch());
 	}
 
 
@@ -87,7 +88,7 @@ class SoundEntryTest
 	void key_blank()
 	{
 		IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
-				new SoundEntry("", true, true, "ENTITY_VILLAGER_NO", 1.0f, 2.0f));
+				new ValidSoundEntry("", true, true, "ENTITY_VILLAGER_NO", 1.0f, 2.0f));
 		assertEquals("The key was blank.", e.getMessage());
 	}
 
@@ -96,7 +97,7 @@ class SoundEntryTest
 	void key_null()
 	{
 		IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
-				new SoundEntry(null, true, true, "ENTITY_VILLAGER_NO", 1.0f, 2.0f));
+				new ValidSoundEntry(null, true, true, "ENTITY_VILLAGER_NO", 1.0f, 2.0f));
 		assertEquals("The key was null.", e.getMessage());
 	}
 
@@ -105,7 +106,7 @@ class SoundEntryTest
 	void soundName_blank()
 	{
 		IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
-				new SoundEntry("ENABLED_SOUND", true, true, "", 1.0f, 2.0f));
+				new ValidSoundEntry("ENABLED_SOUND", true, true, "", 1.0f, 2.0f));
 		assertEquals("The sound name was blank.", e.getMessage());
 	}
 
@@ -114,7 +115,7 @@ class SoundEntryTest
 	void soundName_null()
 	{
 		IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
-				new SoundEntry("ENABLED_SOUND", true, true, null, 1.0f, 2.0f));
+				new ValidSoundEntry("ENABLED_SOUND", true, true, null, 1.0f, 2.0f));
 		assertEquals("The sound name was null.", e.getMessage());
 	}
 
